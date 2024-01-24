@@ -131,6 +131,7 @@ static const CGFloat kTOCropOverLayerCornerWidth = 20.0f;
         [cornerLine[1] setFrame:horizontalFrame];
     }
     
+    #if !TARGET_OS_VISION
     //grid lines - horizontal
     CGFloat thickness = 1.0f / [[UIScreen mainScreen] scale];
     NSInteger numberOfLines = self.horizontalGridLines.count;
@@ -155,6 +156,7 @@ static const CGFloat kTOCropOverLayerCornerWidth = 20.0f;
         frame.origin.x = (padding * (i+1)) + (thickness * i);
         lineView.frame = frame;
     }
+#endif
 }
 
 - (void)setGridHidden:(BOOL)hidden animated:(BOOL)animated
