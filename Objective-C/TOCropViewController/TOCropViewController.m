@@ -1287,9 +1287,12 @@ static const CGFloat kTOCropViewControllerToolbarHeight = 44.0f;
 
         // We do need to include the status bar height on devices
         // that have a physical hardware inset, like an iPhone X notch
-        BOOL hardwareRelatedInset = self.view.safeAreaInsets.bottom > FLT_EPSILON
+        BOOL hardwareRelatedInset = false;
+        
+        #if !TARGET_OS_VISION
+        hardwareRelatedInset = self.view.safeAreaInsets.bottom > FLT_EPSILON
                                     && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone;
-
+        #endif
         // Always have insetting on Mac Catalyst
         #if TARGET_OS_MACCATALYST
         hardwareRelatedInset = YES;
@@ -1306,7 +1309,9 @@ static const CGFloat kTOCropViewControllerToolbarHeight = 44.0f;
             statusBarHeight = 0.0f;
         }
         else {
-            statusBarHeight = self.topLayoutGuide.length;
+#if !TARGET_OS_VISION
+    statusBarHeight = self.topLayoutGuide.length;
+#endif
         }
     }
     
